@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <div class="header">
-        getmmagogo
+        <img src="/img/icons-mmogo/gif/Getmmogo-logo_FINAL-05.gif" />
         <form v-on:submit.prevent="filterOn">
           <input id="term" v-bind:value="search" v-on:input="search = $event.target.value" />
           <button>Search Topic</button>
