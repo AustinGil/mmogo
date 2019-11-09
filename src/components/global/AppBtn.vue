@@ -1,5 +1,5 @@
 <template>
-  <button class="app-btn rounded px-4 py-2">
+  <button v-on="$listeners" class="app-btn rounded px-4 py-2">
     <slot />
   </button>
 </template>

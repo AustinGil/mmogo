@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loaderCount: 0
+    loaderCount: 0,
+    offline: JSON.parse(localStorage.getItem("articles") || "{}")
   },
   mutations: {
     addLoader(state) {
@@ -13,8 +14,17 @@ export default new Vuex.Store({
     },
     removeLoader(state) {
       state.loaderCount--;
+    },
+    setOffline(state, article) {
+      state[article._id] = article;
     }
   },
-  actions: {},
+  actions: {
+    saveOffline({ commit }, article) {
+      console.log(article);
+      // localStorage.setItem("articles", JSON.stringify(articles));
+      // commit('increment')
+    }
+  },
   modules: {}
 });
