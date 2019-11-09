@@ -1,6 +1,19 @@
 <template>
   <div>
-    Home
+    <table class="catagorys">
+      <tr>
+        <td>c1</td>
+        <td>c2</td>
+        <td>c3</td>
+        <td>c4</td>
+      </tr>
+      <tr>
+        <td>c1</td>
+        <td>c2</td>
+        <td>c3</td>
+        <td>c4</td>
+      </tr>
+    </table>
 
     <article v-for="article in articles" :key="article.id">
       <RouterLink :to="{ name: 'article', params: { articleId: article._id } }">
@@ -75,5 +88,19 @@ export default {
 .post {
   column-span: all;
   padding: 5px 0px;
+}
+
+.catagorys {
+  margin-left: auto;
+  margin-right: auto;
+}
+.catagorys td {
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  vertical-align: middle;
+}
+.catagorys td:hover {
+  background: #eee;
 }
 </style>

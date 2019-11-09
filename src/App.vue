@@ -1,15 +1,16 @@
 <template>
   <div id="app">
     <div id="nav">
-      getmmagogo
-      <div style="display: block; float: right; padding-right:10px;">
-        <input id="term" /> <button>Search Topic</button>
+      <div class="something">
+        getmmagogo
+        <div><input id="term" /> <button>Search Topic</button></div>
       </div>
-      <button type="button" class="collapsible">menu</button>
+
       <ul class="menu">
         <li><router-link to="/">Home</router-link></li>
         <li>MySaves</li>
         <li><router-link to="/article/new">Make New Post</router-link></li>
+        <li>Get Article</li>
         <li>LogOut</li>
       </ul>
     </div>
@@ -34,12 +35,19 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #nav {
   padding: 30px;
+
+  .something {
+    display: flex;
+    justify-content: space-between;
+  }
 
   a {
     font-weight: bold;
@@ -58,31 +66,19 @@ export default {
     outline: solid lightgray;
     padding: 2px;
   }
+}
+.menu li {
+  display: inline-block;
+  padding: 0px 10px;
+}
+.menu li:hover {
+  background: rgb(255, 206, 206);
+}
 
-  .collapsible {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: center;
-    outline: none;
-    font-size: 15px;
-  }
-
-  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-  .active,
-  .collapsible:hover {
-    background-color: #ccc;
-  }
-
-  /* Style the collapsible content. Note: hidden by default */
-  .menu {
-    padding: 0 18px;
-    display: none;
-    overflow: hidden;
-    background-color: #f1f1f1;
-  }
+.menu {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  background: #eee;
 }
 </style>
