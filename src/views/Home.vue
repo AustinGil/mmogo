@@ -1,20 +1,9 @@
 <template>
   <div>
-    <div></div>
-    <div class="nav">
-      <input id="term" /> <button>Search Topic</button>
-      <button type="button" class="collapsible">menu</button>
-      <ul class="menu">
-        <li>Home</li>
-        <li>MySaves</li>
-        <li>MakePost</li>
-        <li>LogOut</li>
-      </ul>
-    </div>
     Home
 
     <article v-for="article in articles" :key="article.id">
-      <RouterLink :to="{ name: 'article', params: { articleId: article.id } }">
+      <RouterLink :to="{ name: 'article', params: { articleId: article._id } }">
         <div class="artical">
           <table>
             <tr>
@@ -38,6 +27,9 @@
 </template>
 
 <script>
+import config from "@/config";
+import http from "@/utils/http";
+
 export default {
   data: () => ({
     articles: Array(10)
@@ -49,7 +41,13 @@ export default {
         votes: 3,
         created: Date.now()
       }))
-  })
+  }),
+
+  async mounted() {
+    this.$store.commit("addLoader");
+    this.articles = await http.get(config.db.articles);
+    this.$store.commit("removeLoader");
+  }
 };
 </script>
 
@@ -64,53 +62,18 @@ export default {
   background: lightgray;
 }
 .title {
-  width: 80%;
+  width: 300px;
   text-align: left;
   font-size: 14pt;
   color: darkslategrey;
 }
 .notes {
-  width: auto;
+  width: 100px;
   text-align: right;
   font-size: 6pt;
 }
 .post {
   column-span: all;
   padding: 5px 0px;
-}
-button {
-  border: solid lightblue;
-  padding: 2px;
-}
-input {
-  background: lightyellow;
-  outline: solid lightgray;
-  padding: 2px;
-}
-
-.collapsible {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: center;
-  outline: none;
-  font-size: 15px;
-}
-
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active,
-.collapsible:hover {
-  background-color: #ccc;
-}
-
-/* Style the collapsible content. Note: hidden by default */
-.menu {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
 }
 </style>
