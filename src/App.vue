@@ -4,11 +4,7 @@
       <div class="header">
         getmmagogo
         <form v-on:submit.prevent="filterOn">
-          <input
-            id="term"
-            v-bind:value="search"
-            v-on:input="search = $event.target.value"
-          />
+          <input id="term" v-bind:value="search" v-on:input="search = $event.target.value" />
           <button>Search Topic</button>
         </form>
       </div>
