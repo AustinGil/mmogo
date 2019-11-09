@@ -5,6 +5,21 @@ import router from "./router";
 import store from "./store";
 
 Vue.config.productionTip = false;
+if (process.env.NODE_ENV === "development") {
+  // eslint-disable-next-line no-console
+  Vue.prototype.$log = console.log;
+}
+
+// Components
+const globals = require.context("@/components/global", false, /.*\.vue$/);
+globals.keys().forEach(fileName => {
+  const exported = globals(fileName);
+  const config = exported.default || exported;
+
+  const name = config.name || fileName.replace(/^\.\/(.*)\.\w+$/, "$1");
+
+  Vue.component(name, config);
+});
 
 new Vue({
   router,
