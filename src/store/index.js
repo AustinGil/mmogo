@@ -15,15 +15,21 @@ export default new Vuex.Store({
     removeLoader(state) {
       state.loaderCount--;
     },
-    setOffline(state, article) {
-      state[article._id] = article;
+    setOffline(state, nextState) {
+      state.offline = nextState;
     }
   },
   actions: {
-    saveOffline({ commit }, article) {
-      console.log(article);
-      // localStorage.setItem("articles", JSON.stringify(articles));
-      // commit('increment')
+    saveOffline({ state, commit }, article) {
+      const nextState = { ...state.offline, [article._id]: article };
+      localStorage.setItem("articles", JSON.stringify(nextState));
+      commit("setOffline", nextState);
+    },
+    removeOffline({ state, commit }, article) {
+      const nextState = { ...state.offline };
+      delete nextState[article._id];
+      localStorage.setItem("articles", JSON.stringify(nextState));
+      commit("setOffline", nextState);
     }
   },
   modules: {}
