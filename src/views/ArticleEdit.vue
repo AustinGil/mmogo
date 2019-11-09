@@ -34,7 +34,15 @@ import config from "@/config";
 import http from "@/utils/http";
 
 export default {
+  props: {
+    articleId: {
+      type: [Number, String],
+      required: true
+    }
+  },
+
   data: () => ({
+    article: null,
     form: {
       title: "",
       image: "",
@@ -80,6 +88,13 @@ export default {
     // ]
   }),
 
+  async mounted() {
+    this.$store.commit("addLoader");
+    this.form = await http.get(`${config.db.articles}/${this.articleId}`);
+    this.form.categories = this.form.categories || [];
+    this.$store.commit("removeLoader");
+  },
+
   methods: {
     onToggleCategory({ target }) {
       const value = target.value;
@@ -93,7 +108,7 @@ export default {
 
     async onSubmit() {
       this.$store.commit("addLoader");
-      await http.post(config.db.articles, {
+      await http.put(`${config.db.articles}/${this.articleId}`, {
         json: this.form
       });
       this.$store.commit("removeLoader");

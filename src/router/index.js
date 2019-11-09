@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import Article from "@/views/Article.vue";
 import ArticleCreate from "@/views/ArticleCreate.vue";
+import ArticleEdit from "@/views/ArticleEdit.vue";
 
 Vue.use(VueRouter);
 
@@ -25,9 +26,22 @@ const routes = [
       },
       {
         path: ":articleId",
-        name: "article",
-        component: Article,
-        props: true
+        component: RouterView,
+        props: true,
+        children: [
+          {
+            path: "",
+            name: "article",
+            component: Article,
+            props: true
+          },
+          {
+            path: "edit",
+            name: "article-edit",
+            component: ArticleEdit,
+            props: true
+          }
+        ]
       }
     ]
   }
