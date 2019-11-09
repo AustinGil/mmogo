@@ -4,9 +4,21 @@
 
     <img v-if="article.image" :src="article.image" alt="" />
 
-    <!-- <pre>{{ article }}</pre> -->
+    <p v-if="article.content">{{ article.content }}</p>
 
-    <AppBtn @click="onDownload">Save for offline</AppBtn>
+    <template v-if="$store.state.offline[articleId]">
+      <AppBtn @click="$store.dispatch('saveOffline', article)">
+        Update offline
+      </AppBtn>
+
+      <AppBtn @click="$store.dispatch('removeOffline', article)">
+        Remove offline
+      </AppBtn>
+    </template>
+
+    <AppBtn v-else @click="$store.dispatch('saveOffline', article)">
+      Save for offline
+    </AppBtn>
 
     <RouterLink :to="{ name: 'article-edit', params: { articleId } }">
       Edit
@@ -34,14 +46,6 @@ export default {
     this.$store.commit("addLoader");
     this.article = await http.get(`${config.db.articles}/${this.articleId}`);
     this.$store.commit("removeLoader");
-  },
-
-  methods: {
-    onDownload() {
-      // const articles = JSON.parse(localStorage.getItem("articles") || "{}");
-      // articles[this.articleId] = this.article;
-      // localStorage.setItem("articles", JSON.stringify(articles));
-    }
   }
 };
 </script>
