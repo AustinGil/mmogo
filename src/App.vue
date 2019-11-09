@@ -1,15 +1,26 @@
 <template>
   <div id="app">
     <div id="nav">
-      <div class="something">
+      <div class="header">
         getmmagogo
-        <div><input id="term" /> <button>Search Topic</button></div>
+        <form v-on:submit.prevent="filterOn">
+          <input
+            id="term"
+            v-bind:value="search"
+            v-on:input="search = $event.target.value"
+          />
+          <button>Search Topic</button>
+        </form>
       </div>
 
       <ul class="menu">
-        <li><router-link to="/">Home</router-link></li>
+        <li>
+          <router-link to="/">Home</router-link>
+        </li>
         <li>MySaves</li>
-        <li><router-link to="/article/new">Make New Post</router-link></li>
+        <li>
+          <router-link to="/article/new">Make New Post</router-link>
+        </li>
         <li>Get Article</li>
         <li>LogOut</li>
       </ul>
@@ -17,7 +28,7 @@
 
     <AppLoading v-show="$store.state.loaderCount" />
 
-    <router-view v-show="!$store.state.loaderCount" />
+    <router-view v-show="!$store.state.loaderCount" filter="yo" />
   </div>
 </template>
 
@@ -26,6 +37,17 @@ import AppLoading from "@/components/AppLoading";
 export default {
   components: {
     AppLoading
+  },
+  data() {
+    return {
+      search: ""
+    };
+  },
+
+  methods: {
+    filterOn() {
+      console.log(this.search);
+    }
   }
 };
 </script>
@@ -39,14 +61,18 @@ export default {
   max-width: 750px;
   margin-left: auto;
   margin-right: auto;
+  background: #bd514a;
 }
 
 #nav {
   padding: 30px;
-
-  .something {
+  main {
+    background: white;
+  }
+  .header {
     display: flex;
     justify-content: space-between;
+    background: #bd514a;
   }
 
   a {
@@ -62,7 +88,7 @@ export default {
     padding: 2px;
   }
   input {
-    background: lightyellow;
+    background: white;
     outline: solid lightgray;
     padding: 2px;
   }
@@ -70,6 +96,7 @@ export default {
 .menu li {
   display: inline-block;
   padding: 0px 10px;
+  color: #bd514a;
 }
 .menu li:hover {
   background: rgb(255, 206, 206);

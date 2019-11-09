@@ -28,9 +28,7 @@
               </td>
             </tr>
             <tr>
-              <td class="post" colspan="2">
-                {{ article.format }}
-              </td>
+              <td class="post" colspan="2">{{ article.format }}</td>
             </tr>
           </table>
         </div>
@@ -44,16 +42,12 @@ import config from "@/config";
 import http from "@/utils/http";
 
 export default {
+  props: {
+    filter: String
+  },
+
   data: () => ({
-    articles: Array(10)
-      .fill()
-      .map((nil, index) => ({
-        id: index + 1,
-        title: `title ${index}`,
-        format: "text",
-        votes: 3,
-        created: Date.now()
-      }))
+    articles: []
   }),
 
   async mounted() {
@@ -67,7 +61,7 @@ export default {
 <style scoped>
 .artical {
   display: block;
-  width: 400px;
+  width: 550px;
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 5px;
@@ -75,13 +69,13 @@ export default {
   background: lightgray;
 }
 .title {
-  width: 300px;
+  width: 400px;
   text-align: left;
   font-size: 14pt;
   color: darkslategrey;
 }
 .notes {
-  width: 100px;
+  width: 150px;
   text-align: right;
   font-size: 6pt;
 }
