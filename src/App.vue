@@ -2,14 +2,22 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/article/new">New</router-link>
     </div>
-    <router-view />
+
+    <AppLoading v-show="$store.state.loaderCount" />
+
+    <router-view v-show="!$store.state.loaderCount" />
   </div>
 </template>
 
 <script>
-export default {};
+import AppLoading from "@/components/AppLoading";
+export default {
+  components: {
+    AppLoading
+  }
+};
 </script>
 
 <style lang="scss">

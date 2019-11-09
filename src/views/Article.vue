@@ -1,14 +1,19 @@
 <template>
   <div v-if="article">
     <h1>{{ article.title }}</h1>
+
+    <pre>{{ article }}</pre>
   </div>
 </template>
 
 <script>
+import config from "@/config";
+import http from "@/utils/http";
+
 export default {
   props: {
     articleId: {
-      type: Number,
+      type: [Number, String],
       required: true
     }
   },
@@ -18,11 +23,9 @@ export default {
   }),
 
   async mounted() {
-    // fetch article
-    this.article = await Promise.resolve({
-      id: this.articleId,
-      title: "some title"
-    });
+    this.$store.commit("addLoader");
+    this.article = await http.get(`${config.db.articles}/${this.articleId}`);
+    this.$store.commit("removeLoader");
   }
 };
 </script>
