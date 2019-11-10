@@ -4,7 +4,7 @@
 
     <ul
       v-if="article.categories && article.categories.length"
-      class="flex mb-4"
+      class="flex flex-wrap mb-4"
     >
       <li v-for="category in article.categories" :key="category">
         <RouterLink
