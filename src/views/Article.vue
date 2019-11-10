@@ -2,7 +2,10 @@
   <div v-if="article">
     <h1 class="text-4xl mb-3">{{ article.title }}</h1>
 
-    <ul v-if="article.categories && article.categories.length" class="flex flex-wrap mb-4">
+    <ul
+      v-if="article.categories && article.categories.length"
+      class="flex flex-wrap mb-4"
+    >
       <li v-for="category in article.categories" :key="category">
         <RouterLink
           :to="{
@@ -10,7 +13,8 @@
             query: { category }
           }"
           class="app-btn rounded m-1 px-2 py-1 text-xs"
-        >{{ getCategoryLabel(category) }}</RouterLink>
+          >{{ getCategoryLabel(category) }}</RouterLink
+        >
       </li>
     </ul>
 
@@ -22,34 +26,54 @@
       height="600"
       class="mb-4"
     />
-    <img v-else-if="article.image" :src="article.image" alt class="mb-4" />
+    <img v-else-if="article.image" :src="article.image" alt="" class="mb-4" />
 
-    <p v-if="article.content" class="mb-4 whitespace-pre-wrap">{{ article.content }}</p>
+    <p v-if="article.content" class="mb-4 whitespace-pre-wrap">
+      {{ article.content }}
+    </p>
 
-    <div class="rate grid grid-2-columns@md grid-gap justify-right pb-8">
-      <img src="/img/icons-mmogo/original/thumb.png" />
-      <img src="/img/icons-mmogo/original/thumb-down.png" />
+    <div
+      class="rate grid grid-2-columns@md grid-gap justify-right pb-8 max-w-xs mx-auto"
+    >
+      <button @click="vote('up')">
+        <img src="/img/icons-mmogo/original/thumb.png" alt="up vote" />
+      </button>
+      <button @click="vote('down')">
+        <img src="/img/icons-mmogo/original/thumb-down.png" alt="down vote" />
+      </button>
     </div>
 
     <template v-if="$store.state.downloads[articleId]">
-      <AppBtn @click="$store.dispatch('removeDownload', article)" class="mr-2">Remove</AppBtn>
+      <AppBtn @click="$store.dispatch('removeDownload', article)" class="mr-2"
+        >Remove</AppBtn
+      >
 
-      <AppBtn @click="showQr = !showQr" class="app-btn mr-2 rounded px-4 py-2">Share</AppBtn>
+      <AppBtn @click="showQr = !showQr" class="app-btn mr-2 rounded px-4 py-2"
+        >Share</AppBtn
+      >
     </template>
 
-    <AppBtn v-else @click="$store.dispatch('saveDownload', article)" class="mr-2">Download</AppBtn>
+    <AppBtn
+      v-else
+      @click="$store.dispatch('saveDownload', article)"
+      class="mr-2"
+      >Download</AppBtn
+    >
 
     <template v-if="isAuthor">
       <RouterLink
         :to="{ name: 'article-edit', params: { articleId } }"
         class="app-btn mr-2 rounded px-4 py-2"
-      >Edit</RouterLink>
+        >Edit</RouterLink
+      >
 
       <AppBtn @click="onDelete">Delete</AppBtn>
     </template>
 
     <div v-show="showQr" class="qr-wrapper grid text-center mt-6 mb-6">
-      <p class="max-w-sm text-xl mb-5">Have your friends scan this QR code to import the article.</p>
+      <p class="max-w-sm text-xl mb-5">
+        Have your friends scan this QR code to import the article.
+      </p>
       <div ref="qrcode"></div>
     </div>
   </div>
@@ -116,6 +140,12 @@ export default {
         return item.value === category;
       });
       return match.label;
+    },
+
+    vote(direction) {
+      alert(
+        `Thank you for your "${direction}" vote. We appreciate the feedback.`
+      );
     },
 
     async onDelete() {
