@@ -32,6 +32,7 @@
           v-on="$listeners"
           :aria-describedby="invalid.anyInvalid && `${id}__description`"
           class="vts-input__input"
+          :value="option.value"
         />
         <span :class="['vts-input__text', classes.text]">
           {{ option.label }}
