@@ -1,49 +1,59 @@
 <template>
   <div id="app" class="p-8">
-    <header id="nav" class="pb-8">
-      <div class="header flex justify-between">
+    <header id="nav">
+      <RouterLink to="/">
         <img
           src="\img\icons-mmogo\original\Getmmogo logo_FINAL-05.png"
-          style="width:30%; height:30%;"
+          class="w-64 mx-auto mb-5"
         />
-        <form v-on:submit.prevent class="flex">
-          <input
-            v-bind:value="search"
-            v-on:input="search = $event.target.value"
-          />
-          <AppBtn>Search</AppBtn>
-        </form>
-      </div>
+      </RouterLink>
 
-      <ul class="menu">
+      <ul
+        class="menu flex flex-wrap rounded-t justify-center align-center bg-white border-b-2 border-solid border-gray-300"
+      >
         <li>
-          <router-link to="/">Home</router-link>
+          <router-link to="/" class="m-1 p-2 block">Home</router-link>
         </li>
-
-        <li>MySaves</li>
 
         <li v-if="$store.state.user">
-          <router-link to="/article/new">Make New Post</router-link>
+          <router-link to="/article/new" class="m-1 p-2 block">
+            Write
+          </router-link>
         </li>
 
-        <li>Get Article</li>
+        <li>
+          <RouterLink :to="{ name: 'downloads' }" class="m-1 p-2 block">
+            Downloads
+          </RouterLink>
+        </li>
+
+        <li>
+          <RouterLink to="/" class="m-1 p-2 block">Scan</RouterLink>
+        </li>
 
         <li v-if="isOnline">
           <button
             v-if="$store.state.user"
             @click="$store.commit('setUser', null)"
+            class="m-1 p-2 block"
           >
             Log Out
           </button>
-          <RouterLink v-else to="/login">Log In</RouterLink>
+          <RouterLink v-else to="/login" class="m-1 p-2 block">
+            Log In
+          </RouterLink>
         </li>
       </ul>
     </header>
 
-    <main class="p-4 bg-white">
-      <AppLoading v-show="$store.state.loaderCount" />
+    <main class="p-5 bg-white rounded-b">
+      <AppLoading v-show="$store.state.loaderCount" class="mx-auto" />
 
       <router-view v-show="!$store.state.loaderCount" :search="search" />
+
+      <h3 v-if="isOffline" class="text-center mt-6 p-3 bg-blue-200">
+        You are currently in offline mode.
+      </h3>
     </main>
   </div>
 </template>
@@ -63,6 +73,22 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  background: #bd514a;
+}
+svg {
+  stroke: currentColor;
+  fill: currentColor;
+}
+input,
+textarea,
+select {
+  border: 1px solid;
+}
+input[type="radio"],
+input[type="checkbox"] {
+  width: initial;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -71,35 +97,14 @@ export default {
   max-width: 750px;
   margin-left: auto;
   margin-right: auto;
-  background: #bd514a;
-}
-body {
-  background: #bd514a;
-}
-#nav {
-  .header {
-    background: #bd514a;
-  }
-
-  a {
-    color: #bd514a;
-  }
-}
-.menu li {
-  display: inline-block;
-  padding: 0px 10px;
-}
-.menu li:hover,
-button:hover {
-  color: #000;
-  background: #eee5cc;
 }
 
-.menu {
-  list-style-type: none;
-  display: flex;
-  justify-content: center;
-  background: white;
-  padding: 5px 0px;
+.menu a,
+.menu button {
+  color: #bd514a;
+  &:hover {
+    color: #000;
+    background: #eee5cc;
+  }
 }
 </style>

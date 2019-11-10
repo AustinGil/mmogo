@@ -4,6 +4,7 @@ import Home from "@/views/Home.vue";
 import Article from "@/views/Article.vue";
 import ArticleCreate from "@/views/ArticleCreate.vue";
 import ArticleEdit from "@/views/ArticleEdit.vue";
+import Downloads from "@/views/Downloads.vue";
 import Login from "@/views/Login.vue";
 
 Vue.use(VueRouter);
@@ -45,6 +46,11 @@ const routes = [
         ]
       }
     ]
+  },
+  {
+    path: "/downloads",
+    name: "downloads",
+    component: Downloads
   },
   {
     path: "/login",

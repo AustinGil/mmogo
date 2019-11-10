@@ -2,19 +2,35 @@
   <main>
     <div>
       <form @submit.prevent="onSubmit">
-        <AppInput v-model="form.title" label="Title" />
-
-        <AppInput v-model="form.image" label="Image (url)" type="url" />
+        <AppInput
+          v-model="form.title"
+          label="Title"
+          class="mb-3"
+          :classes="{ input: 'px-2 py-1 border-gray-400 rounded' }"
+          required
+        />
 
         <AppInput
-          v-for="{ label, value } in categories"
-          :key="value"
-          :label="label"
-          type="checkbox"
-          :value="value"
-          :checked="form.categories.includes(value)"
-          @change="onToggleCategory"
+          v-model="form.image"
+          label="Image (url)"
+          type="url"
+          class="mb-3"
+          :classes="{ input: 'px-2 py-1 border-gray-400 rounded' }"
+          required
         />
+
+        <fieldset class="mb-3">
+          <legend>Categories</legend>
+          <AppInput
+            v-for="{ label, value } in categories"
+            :key="value"
+            :label="label"
+            type="checkbox"
+            :value="value"
+            :checked="form.categories.includes(value)"
+            @change="onToggleCategory"
+          />
+        </fieldset>
 
         <!-- <AppInput
         v-model="form.title"
@@ -23,7 +39,15 @@
         :options="formats"
         />-->
 
-        <AppInput v-model="form.content" label="Content" type="textarea" />
+        <AppInput
+          v-model="form.content"
+          label="Content"
+          type="textarea"
+          rows="6"
+          class="mb-3"
+          :classes="{ input: 'px-2 py-1 border-gray-400 rounded' }"
+          required
+        />
 
         <AppBtn type="submit" style=" margin-left: auto;">Save</AppBtn>
       </form>
@@ -83,15 +107,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-input,
-textarea,
-select {
-  border: 1px solid;
-}
-input[type="radio"],
-input[type="checkbox"] {
-  width: initial;
-}
-</style>

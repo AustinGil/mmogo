@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     loaderCount: 0,
-    offline: JSON.parse(localStorage.getItem("articles") || "{}")
+    downloads: JSON.parse(localStorage.getItem("articles") || "{}")
   },
   mutations: {
     setUser(state, user) {
@@ -19,21 +19,21 @@ export default new Vuex.Store({
     removeLoader(state) {
       state.loaderCount--;
     },
-    setOffline(state, nextState) {
-      state.offline = nextState;
+    setDownloads(state, nextState) {
+      state.downloads = nextState;
     }
   },
   actions: {
-    saveOffline({ state, commit }, article) {
-      const nextState = { ...state.offline, [article._id]: article };
+    saveDownload({ state, commit }, article) {
+      const nextState = { ...state.downloads, [article._id]: article };
       localStorage.setItem("articles", JSON.stringify(nextState));
-      commit("setOffline", nextState);
+      commit("setDownloads", nextState);
     },
-    removeOffline({ state, commit }, article) {
-      const nextState = { ...state.offline };
+    removeDownload({ state, commit }, article) {
+      const nextState = { ...state.downloads };
       delete nextState[article._id];
       localStorage.setItem("articles", JSON.stringify(nextState));
-      commit("setOffline", nextState);
+      commit("setDownloads", nextState);
     }
   },
   modules: {}

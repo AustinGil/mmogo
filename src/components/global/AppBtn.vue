@@ -4,9 +4,15 @@
   </button>
 </template>
 
-<style>
+<style lang="scss">
 .app-btn {
+  line-height: 1;
   color: #fff;
   background: #bd514a;
+
+  &:hover {
+    color: #000;
+    background: #eee5cc;
+  }
 }
 </style>

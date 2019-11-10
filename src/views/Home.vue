@@ -12,6 +12,15 @@
       </button>
     </div>
 
+    <form v-on:submit.prevent class="mb-3">
+      <input
+        v-bind:value="search"
+        v-on:input="search = $event.target.value"
+        placeholder="Filter articles by text"
+        class="p-2 rounded border-gray-400"
+      />
+    </form>
+
     <h3 v-if="!filtered.length" class="text-center">No articles.</h3>
 
     <RouterLink
@@ -19,19 +28,11 @@
       :key="article.id"
       :to="{ name: 'article', params: { articleId: article._id } }"
     >
-      <article class="md:flex justify-between mb-3 p-3 bg-gray-300">
+      <article class="md:flex justify-between mb-3 p-3 bg-gray-300 rounded">
         <h3 class="pr-3">{{ article.title }}</h3>
-        <small class="text-right">
-          post id: {{ article._id }}
-          <br />
-          date: {{ article._createdOn }}
-        </small>
+        <small class="text-right">Published: {{ article._createdOn }} </small>
       </article>
     </RouterLink>
-
-    <h3 v-if="isOffline" class="text-center mt-6 p-3 bg-blue-200">
-      You are currently in offline mode.
-    </h3>
   </div>
 </template>
 
@@ -73,7 +74,7 @@ export default {
     this.category = this.$route.query.category;
 
     if (this.isOffline) {
-      this.articles = Object.values(this.$store.state.offline);
+      this.articles = Object.values(this.$store.state.downloads);
       return;
     }
 

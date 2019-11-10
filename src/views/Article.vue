@@ -1,24 +1,54 @@
 <template>
   <div v-if="article">
-    <h1>{{ article.title }}</h1>
+    <h1 class="text-4xl mb-3">{{ article.title }}</h1>
 
-    <img v-if="article.image && isOffline" src="/img/offline-img.svg" alt="" width="900" height="600" />
-    <img v-else-if="article.image" :src="article.image" alt="" />
+    <ul
+      v-if="article.categories && article.categories.length"
+      class="flex mb-4"
+    >
+      <li v-for="category in article.categories" :key="category">
+        <RouterLink
+          :to="{
+            name: 'home',
+            query: { category }
+          }"
+          class="app-btn rounded m-1 px-2 py-1 text-xs"
+        >
+          {{ getCategoryLabel(category) }}
+        </RouterLink>
+      </li>
+    </ul>
 
-    <p v-if="article.content">{{ article.content }}</p>
+    {{ $options.categories }}
 
-    <template v-if="$store.state.offline[articleId]">
-      <AppBtn v-if="isOnline" @click="$store.dispatch('saveOffline', article)">
-        Update offline
+    <img
+      v-if="article.image && isOffline"
+      src="/img/offline-img.svg"
+      alt=""
+      width="900"
+      height="600"
+      class="mb-4"
+    />
+    <img v-else-if="article.image" :src="article.image" alt="" class="mb-4" />
+
+    <p v-if="article.content" class="mb-4">{{ article.content }}</p>
+
+    <template v-if="$store.state.downloads[articleId]">
+      <AppBtn v-if="isOnline" @click="$store.dispatch('saveDownload', article)">
+        Update
       </AppBtn>
 
-      <AppBtn @click="$store.dispatch('removeOffline', article)">
-        Remove offline
+      <AppBtn @click="$store.dispatch('removeDownload', article)">
+        Remove
+      </AppBtn>
+
+      <AppBtn @click="showQr = !showQr" class="app-btn rounded px-4 py-2">
+        Share
       </AppBtn>
     </template>
 
-    <AppBtn v-else @click="$store.dispatch('saveOffline', article)">
-      Save for offline
+    <AppBtn v-else @click="$store.dispatch('saveDownload', article)">
+      Save
     </AppBtn>
 
     <RouterLink
@@ -27,6 +57,13 @@
     >
       Edit
     </RouterLink>
+
+    <div v-show="showQr" class="qr-wrapper grid text-center mt-6 mb-6">
+      <p class="max-w-sm text-xl mb-5">
+        Have your friends scan this QR code to import the article.
+      </p>
+      <div ref="qrcode"></div>
+    </div>
   </div>
 </template>
 
@@ -43,7 +80,8 @@ export default {
   },
 
   data: () => ({
-    article: null
+    article: null,
+    showQr: false
   }),
 
   computed: {
@@ -59,13 +97,32 @@ export default {
 
   async mounted() {
     if (this.isOffline) {
-      this.article = this.$store.state.offline[this.articleId];
+      this.article = this.$store.state.downloads[this.articleId];
       return;
     }
 
     this.$store.commit("addLoader");
     this.article = await http.get(`${config.db.articles}/${this.articleId}`);
     this.$store.commit("removeLoader");
+
+    this.$nextTick(() => {
+      new QRCode(this.$refs.qrcode, "http://jindo.dev.naver.com/collie");
+    });
+  },
+
+  methods: {
+    getCategoryLabel(category) {
+      const match = config.categories.find(item => {
+        return item.value === category;
+      });
+      return match.label;
+    }
   }
 };
 </script>
+
+<style lang="scss">
+.qr-wrapper {
+  justify-items: center;
+}
+</style>
