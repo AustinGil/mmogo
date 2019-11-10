@@ -19,8 +19,6 @@
       </li>
     </ul>
 
-    {{ $options.categories }}
-
     <img
       v-if="article.image && isOffline"
       src="/img/offline-img.svg"
@@ -31,13 +29,11 @@
     />
     <img v-else-if="article.image" :src="article.image" alt="" class="mb-4" />
 
-    <p v-if="article.content" class="mb-4">{{ article.content }}</p>
+    <p v-if="article.content" class="mb-4 whitespace-pre-wrap">
+      {{ article.content }}
+    </p>
 
     <template v-if="$store.state.downloads[articleId]">
-      <AppBtn v-if="isOnline" @click="$store.dispatch('saveDownload', article)">
-        Update
-      </AppBtn>
-
       <AppBtn @click="$store.dispatch('removeDownload', article)">
         Remove
       </AppBtn>
@@ -48,15 +44,18 @@
     </template>
 
     <AppBtn v-else @click="$store.dispatch('saveDownload', article)">
-      Save
+      Download
     </AppBtn>
 
-    <RouterLink
-      v-if="isAuthor"
-      :to="{ name: 'article-edit', params: { articleId } }"
-    >
-      Edit
-    </RouterLink>
+    <template v-if="isAuthor">
+      <RouterLink
+        :to="{ name: 'article-edit', params: { articleId } }"
+        class="app-btn rounded px-4 py-2"
+        >Edit
+      </RouterLink>
+
+      <AppBtn @click="onDelete">Delete</AppBtn>
+    </template>
 
     <div v-show="showQr" class="qr-wrapper grid text-center mt-6 mb-6">
       <p class="max-w-sm text-xl mb-5">
@@ -98,15 +97,14 @@ export default {
   async mounted() {
     if (this.isOffline) {
       this.article = this.$store.state.downloads[this.articleId];
-      return;
+    } else {
+      this.$store.commit("addLoader");
+      this.article = await http.get(`${config.db.articles}/${this.articleId}`);
+      this.$store.commit("removeLoader");
     }
 
-    this.$store.commit("addLoader");
-    this.article = await http.get(`${config.db.articles}/${this.articleId}`);
-    this.$store.commit("removeLoader");
-
     this.$nextTick(() => {
-      new QRCode(this.$refs.qrcode, "http://jindo.dev.naver.com/collie");
+      new QRCode(this.$refs.qrcode, JSON.stringify(this.article));
     });
   },
 
@@ -116,6 +114,15 @@ export default {
         return item.value === category;
       });
       return match.label;
+    },
+
+    async onDelete() {
+      this.$store.commit("addLoader");
+      this.article = await http.delete(
+        `${config.db.articles}/${this.articleId}`
+      );
+      this.$store.commit("removeLoader");
+      this.$router.push("/");
     }
   }
 };

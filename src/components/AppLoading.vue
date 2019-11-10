@@ -27,6 +27,6 @@
 
 <style lang="scss">
 .app-loader {
-  max-width: 150px;
+  max-width: 100px;
 }
 </style>

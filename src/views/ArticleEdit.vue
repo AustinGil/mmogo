@@ -1,31 +1,50 @@
 <template>
   <div>
     <form @submit.prevent="onSubmit">
-      <AppInput v-model="form.title" label="Title" />
-
-      <AppInput v-model="form.image" label="Image (url)" type="url" />
-
       <AppInput
-        v-for="{ label, value } in categories"
-        :key="value"
-        :label="label"
-        type="checkbox"
-        :value="value"
-        :checked="form.categories.includes(value)"
-        @change="onToggleCategory"
+        v-model="form.title"
+        label="Title"
+        class="mb-3"
+        :classes="{ input: 'px-2 py-1 border-gray-400 rounded' }"
+        required
       />
 
-      <!-- <AppInput
-        v-model="form.title"
-        label="Format"
-        type="radio"
-        :options="formats"
-      /> -->
+      <AppInput
+        v-model="form.image"
+        label="Image (url)"
+        type="url"
+        class="mb-3"
+        :classes="{ input: 'px-2 py-1 border-gray-400 rounded' }"
+        required
+      />
 
-      <AppInput v-model="form.content" label="Content" type="textarea" />
+      <fieldset class="mb-3">
+        <legend>Categories</legend>
+        <AppInput
+          v-for="{ label, value } in categories"
+          :key="value"
+          :label="label"
+          type="checkbox"
+          :value="value"
+          :checked="form.categories.includes(value)"
+          @change="onToggleCategory"
+        />
+      </fieldset>
+
+      <AppInput
+        v-model="form.content"
+        label="Content"
+        type="textarea"
+        rows="6"
+        class="mb-3"
+        :classes="{ input: 'px-2 py-1 border-gray-400 rounded' }"
+        required
+      />
 
       <AppBtn type="submit">Save</AppBtn>
+      <RouterLink to="/" class="app-btn rounded px-4 py-2">Back</RouterLink>
     </form>
+    {{ $route }}
   </div>
 </template>
 
@@ -46,21 +65,10 @@ export default {
     form: {
       title: "",
       image: "",
-      // format: "",
       content: "",
       categories: []
     },
     categories: config.categories
-    // formats: [
-    //   {
-    //     label: "Text",
-    //     value: "text"
-    //   },
-    //   {
-    //     label: "How-to",
-    //     value: "howTo"
-    //   }
-    // ]
   }),
 
   async mounted() {

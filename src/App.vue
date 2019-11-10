@@ -28,7 +28,9 @@
         </li>
 
         <li>
-          <RouterLink to="/" class="m-1 p-2 block">Scan</RouterLink>
+          <RouterLink :to="{ name: 'scan' }" class="m-1 p-2 block"
+            >Scan</RouterLink
+          >
         </li>
 
         <li v-if="isOnline">
@@ -46,14 +48,17 @@
       </ul>
     </header>
 
+    <p v-if="isOffline" class="text-center p-3 bg-blue-200">
+      You are currently in offline mode.
+    </p>
+
     <main class="p-5 bg-white rounded-b">
-      <AppLoading v-show="$store.state.loaderCount" class="mx-auto" />
+      <AppLoading
+        v-show="$store.state.loaderCount"
+        class="main-loader mx-auto"
+      />
 
       <router-view v-show="!$store.state.loaderCount" :search="search" />
-
-      <h3 v-if="isOffline" class="text-center mt-6 p-3 bg-blue-200">
-        You are currently in offline mode.
-      </h3>
     </main>
   </div>
 </template>
@@ -106,5 +111,9 @@ input[type="checkbox"] {
     color: #000;
     background: #eee5cc;
   }
+}
+
+.main-loader {
+  color: #bd514a;
 }
 </style>

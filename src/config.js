@@ -35,17 +35,17 @@ export default {
     },
     {
       label: "Infrastructure",
-      value: "Infrastructure",
+      value: "infrastructure",
       icon: "/img/icons-mmogo/original/008-wooden.svg"
     },
     {
       label: "Health",
-      value: "Health",
+      value: "health",
       icon: "/img/icons-mmogo/original/017-mortar.svg"
     },
     {
       label: "How To",
-      value: "how to",
+      value: "how-to",
       icon: "/img/icons-mmogo/original/014-drill.svg"
     }
   ]

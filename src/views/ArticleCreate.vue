@@ -32,13 +32,6 @@
           />
         </fieldset>
 
-        <!-- <AppInput
-        v-model="form.title"
-        label="Format"
-        type="radio"
-        :options="formats"
-        />-->
-
         <AppInput
           v-model="form.content"
           label="Content"
@@ -64,21 +57,10 @@ export default {
     form: {
       title: "",
       image: "",
-      // format: "",
       content: "",
       categories: []
     },
     categories: config.categories
-    // formats: [
-    //   {
-    //     label: "Text",
-    //     value: "text"
-    //   },
-    //   {
-    //     label: "How-to",
-    //     value: "howTo"
-    //   }
-    // ]
   }),
 
   methods: {

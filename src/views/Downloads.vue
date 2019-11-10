@@ -20,9 +20,6 @@
 </template>
 
 <script>
-import config from "@/config";
-import http from "@/utils/http";
-
 export default {
   computed: {
     articles() {

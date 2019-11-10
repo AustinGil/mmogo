@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "http://getmmogo.netlify.com/*"
+  to = "https://getmmogo.netlify.com/:splat"
+  status = 301
+  force = true
