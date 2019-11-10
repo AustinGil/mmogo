@@ -5,13 +5,25 @@
       offline collection.
     </p>
 
-    <AppBtn v-if="!imageCapture" @click="onClick" class="text-4xl"
-      >Open Scanner</AppBtn
+    <AppInput
+      label="Available Devices"
+      type="radio"
+      name="videoDevices"
+      :options="
+        videoDevices.map(device => ({
+          value: device.deviceId,
+          label: device.label
+        }))
+      "
+      @change="selectDevice"
+      class="mb-4"
+    />
+
+    <AppBtn v-if="imageCapture" @click="takePhoto" class="text-4xl mb-6"
+      >Capture photo</AppBtn
     >
 
-    <AppBtn v-else @click="takePhoto" class="text-4xl">Capture photo</AppBtn>
-
-    <video ref="video" autoplay></video>
+    <!-- <video ref="video" autoplay></video> -->
 
     <img ref="img" src="" alt="" />
   </div>
@@ -20,27 +32,55 @@
 <script>
 export default {
   data: () => ({
+    videoDevices: [],
+    selectedDevice: null,
     imageCapture: null
   }),
+
+  async mounted() {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    this.videoDevices = devices.filter(device => device.kind === "videoinput");
+    console.log(this.videoDevices);
+  },
 
   methods: {
     async onClick() {
       // alert("Just kidding. This feature hasn't been completed yet 😞.");
+    },
 
-      const mediaStream = await navigator.mediaDevices.getUserMedia({
+    async selectDevice(event) {
+      // const found = this.videoDevices.find(device => {
+      //   return device.label === event.target.value;
+      // });
+      // if (!found) return;
+      // this.selectedDevice = found;
+
+      const constraints = {
         video: {
-          facingMode: {
-            exact: "environment"
+          //     width: {
+          //       min: 1280,
+          //       ideal: 1920,
+          //       max: 2560
+          //     },
+          //     height: {
+          //       min: 720,
+          //       ideal: 1080,
+          //       max: 1440
+          //     }
+          deviceId: {
+            exact: event.target.value
           }
         }
-      });
+      };
 
-      this.$refs.video.srcObject = stream;
-      video.play();
-      // streamStarted = true;
-
+      const mediaStream = await navigator.mediaDevices.getUserMedia(
+        constraints
+      );
       const mediaStreamTrack = mediaStream.getVideoTracks()[0];
       this.imageCapture = new ImageCapture(mediaStreamTrack);
+
+      // this.$refs.video.srcObject = stream;
+      //   video.play();
     },
 
     async takePhoto() {
