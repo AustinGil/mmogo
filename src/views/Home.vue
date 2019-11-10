@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div class="grid grid-3-columns@md grid-2-columns@sm pb-8">
+    <div
+      class="category-filters grid grid-3-columns@md grid-gap justify-center pb-8"
+    >
       <button
         v-for="filterCat in categories"
         :key="filterCat.value"
         @click="setCategory(filterCat.value)"
-        class="category-filter p-3 rounded border border-solid border-transparent"
+        class="category-filter block p-3 rounded border border-solid border-transparent"
         :class="{ 'category-filter--selected': filterCat.value === category }"
       >
-        <img :src="filterCat.icon" class="icon" />
-        {{ filterCat.label }}
+        <div class="category-filter__content">
+          <img :src="filterCat.icon" class="category-filter__icon" />
+          <span>{{ filterCat.label }}</span>
+        </div>
       </button>
     </div>
 
@@ -96,7 +100,17 @@ export default {
 </script>
 
 <style lang="scss">
+.category-filters {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
 .category-filter {
+  &__content {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    align-items: center;
+  }
+
   &:hover {
     background: #eee5cc;
   }
@@ -105,12 +119,10 @@ export default {
   .grid &--selected:hover {
     border-color: #bd514a;
   }
-}
 
-.icon {
-  height: 75px;
-  width: 75px;
-  margin-left: auto;
-  margin-right: auto;
+  &__icon {
+    height: 50px;
+    width: 50px;
+  }
 }
 </style>
