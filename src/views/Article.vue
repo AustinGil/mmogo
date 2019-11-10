@@ -2,12 +2,13 @@
   <div v-if="article">
     <h1>{{ article.title }}</h1>
 
-    <img v-if="article.image" :src="article.image" alt="" />
+    <img v-if="article.image && isOffline" src="/img/offline-img.svg" alt="" width="900" height="600" />
+    <img v-else-if="article.image" :src="article.image" alt="" />
 
     <p v-if="article.content">{{ article.content }}</p>
 
     <template v-if="$store.state.offline[articleId]">
-      <AppBtn @click="$store.dispatch('saveOffline', article)">
+      <AppBtn v-if="isOnline" @click="$store.dispatch('saveOffline', article)">
         Update offline
       </AppBtn>
 
@@ -57,6 +58,11 @@ export default {
   },
 
   async mounted() {
+    if (this.isOffline) {
+      this.article = this.$store.state.offline[this.articleId];
+      return;
+    }
+
     this.$store.commit("addLoader");
     this.article = await http.get(`${config.db.articles}/${this.articleId}`);
     this.$store.commit("removeLoader");

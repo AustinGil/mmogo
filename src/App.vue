@@ -28,7 +28,7 @@
 
         <li>Get Article</li>
 
-        <li>
+        <li v-if="isOnline">
           <button
             v-if="$store.state.user"
             @click="$store.commit('setUser', null)"
