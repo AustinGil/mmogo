@@ -11,6 +11,8 @@
 
     <AppBtn v-else @click="takePhoto" class="text-4xl">Capture photo</AppBtn>
 
+    <video ref="video"></video>
+
     <img ref="img" src="" alt="" />
   </div>
 </template>
@@ -32,6 +34,10 @@ export default {
           }
         }
       });
+
+      this.$refs.video.srcObject = stream;
+      // streamStarted = true;
+
       const mediaStreamTrack = mediaStream.getVideoTracks()[0];
       this.imageCapture = new ImageCapture(mediaStreamTrack);
     },
