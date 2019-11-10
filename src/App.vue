@@ -1,15 +1,14 @@
 <template>
-  <div id="app">
-    <div id="nav">
+  <div id="app" class="p-8">
+    <div id="nav" class="pb-8">
       <div class="header">
         getmmagogo
-        <form v-on:submit.prevent="filterOn">
+        <form v-on:submit.prevent="filterOn" class="flex">
           <input
-            id="term"
             v-bind:value="search"
             v-on:input="search = $event.target.value"
           />
-          <button>Search Topic</button>
+          <button class="">Search</button>
         </form>
       </div>
 
@@ -28,7 +27,7 @@
 
     <AppLoading v-show="$store.state.loaderCount" />
 
-    <router-view v-show="!$store.state.loaderCount" filter="yo" />
+    <router-view v-show="!$store.state.loaderCount" :search="search" />
   </div>
 </template>
 
@@ -42,12 +41,6 @@ export default {
     return {
       search: ""
     };
-  },
-
-  methods: {
-    filterOn() {
-      console.log(this.search);
-    }
   }
 };
 </script>
@@ -65,7 +58,6 @@ export default {
 }
 
 #nav {
-  padding: 30px;
   main {
     background: white;
   }
@@ -82,15 +74,6 @@ export default {
     &.router-link-exact-active {
       color: #42b983;
     }
-  }
-  button {
-    border: solid lightblue;
-    padding: 2px;
-  }
-  input {
-    background: white;
-    outline: solid lightgray;
-    padding: 2px;
   }
 }
 .menu li {

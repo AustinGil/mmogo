@@ -1,21 +1,17 @@
 <template>
   <div>
-    <table class="catagorys">
-      <tr>
-        <td>c1</td>
-        <td>c2</td>
-        <td>c3</td>
-        <td>c4</td>
-      </tr>
-      <tr>
-        <td>c1</td>
-        <td>c2</td>
-        <td>c3</td>
-        <td>c4</td>
-      </tr>
-    </table>
+    <div class="grid grid-3-columns@md grid-2-columns@sm pb-8">
+      <button
+        v-for="category in categories"
+        :key="category.value"
+        @click="setCategory(category.value)"
+        class="p-3"
+      >
+        {{ category.label }}
+      </button>
+    </div>
 
-    <article v-for="article in articles" :key="article.id">
+    <article v-for="article in filtered" :key="article.id">
       <RouterLink :to="{ name: 'article', params: { articleId: article._id } }">
         <div class="artical">
           <table>
@@ -43,17 +39,49 @@ import http from "@/utils/http";
 
 export default {
   props: {
-    filter: String
+    search: String
   },
 
   data: () => ({
-    articles: []
+    articles: [],
+    categories: config.categories,
+    category: ""
   }),
 
+  computed: {
+    filtered() {
+      const { search, category } = this;
+      return this.articles.filter(article => {
+        if (search) {
+          const text = (article.title + article.content).toLowerCase();
+          if (!text.includes(search.toLowerCase())) {
+            return false;
+          }
+        }
+        if (category) {
+          const categories = article.categories || [];
+          return categories.includes(category);
+        }
+        return true;
+      });
+    }
+  },
+
   async mounted() {
+    this.category = this.$route.query.category;
+
     this.$store.commit("addLoader");
     this.articles = await http.get(config.db.articles);
     this.$store.commit("removeLoader");
+  },
+
+  methods: {
+    setCategory(category) {
+      const currentCategory = this.category;
+      category = currentCategory === category ? undefined : category;
+      this.category = category;
+      this.$router.push({ name: "home", query: { category } });
+    }
   }
 };
 </script>
@@ -82,19 +110,5 @@ export default {
 .post {
   column-span: all;
   padding: 5px 0px;
-}
-
-.catagorys {
-  margin-left: auto;
-  margin-right: auto;
-}
-.catagorys td {
-  height: 100px;
-  width: 100px;
-  text-align: center;
-  vertical-align: middle;
-}
-.catagorys td:hover {
-  background: #eee;
 }
 </style>

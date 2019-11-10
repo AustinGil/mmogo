@@ -1,0 +1,105 @@
+.flex-grow {
+  flex-grow: 1;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-2-columns {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3-columns {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4-columns {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@include breakpoint(sm) {
+  .grid-2-columns\@sm {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3-columns\@sm {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-4-columns\@sm {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@include breakpoint(md) {
+  .grid-2-columns\@md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3-columns\@md {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-4-columns\@md {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.grid-gap,
+.column-gap {
+  grid-column-gap: rem($size3);
+}
+
+.grid-gap,
+.row-gap {
+  grid-row-gap: rem($size3);
+}
+
+.column-span-2 {
+  grid-column: span 2;
+
+  &\@sm {
+    @include breakpoint(sm) {
+      grid-column: span 2;
+    }
+  }
+
+  &\@md {
+    @include breakpoint(md) {
+      grid-column: span 2;
+    }
+  }
+}
+
+.column-span-3 {
+  grid-column: span 3;
+
+  &\@sm {
+    @include breakpoint(sm) {
+      grid-column: span 3;
+    }
+  }
+
+  &\@md {
+    @include breakpoint(md) {
+      grid-column: span 3;
+    }
+  }
+}
+
+.column-span-4 {
+  grid-column: span 4;
+
+  &\@sm {
+    @include breakpoint(sm) {
+      grid-column: span 4;
+    }
+  }
+
+  &\@md {
+    @include breakpoint(md) {
+      grid-column: span 4;
+    }
+  }
+}
