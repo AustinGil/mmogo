@@ -21,7 +21,15 @@
           <router-link to="/article/new">Make New Post</router-link>
         </li>
         <li>Get Article</li>
-        <li>LogOut</li>
+        <li>
+          <button
+            v-if="$store.state.user"
+            @click="$store.commit('setUser', null)"
+          >
+            Log Out
+          </button>
+          <RouterLink v-else to="/login">Log In</RouterLink>
+        </li>
       </ul>
     </div>
 

@@ -67,9 +67,14 @@ export default {
     },
 
     async onSubmit() {
+      const user = this.$store.state.user;
+
       this.$store.commit("addLoader");
       await http.post(config.db.articles, {
-        json: this.form
+        json: {
+          ...this.form,
+          author: user && user.email
+        }
       });
       this.$store.commit("removeLoader");
     }
