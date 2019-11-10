@@ -2,7 +2,10 @@
   <div id="app">
     <div id="nav">
       <div class="header">
-        <img src="/img/icons-mmogo/gif/Getmmogo-logo_FINAL-05.gif" />
+        <img
+          src="\img\icons-mmogo\original\Getmmogo logo_FINAL-05.png"
+          style="width:30%; height:30%;"
+        />
         <form v-on:submit.prevent="filterOn">
           <input id="term" v-bind:value="search" v-on:input="search = $event.target.value" />
           <button>Search Topic</button>
@@ -64,6 +67,7 @@ export default {
   padding: 30px;
   main {
     background: white;
+    max-width: 600px;
   }
   .header {
     display: flex;
@@ -76,16 +80,15 @@ export default {
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #2c3e50;
     }
   }
   button {
-    border: solid lightblue;
+    background: white;
     padding: 2px;
   }
   input {
     background: white;
-    outline: solid lightgray;
     padding: 2px;
   }
 }
@@ -94,14 +97,15 @@ export default {
   padding: 0px 10px;
   color: #bd514a;
 }
-.menu li:hover {
-  background: rgb(255, 206, 206);
+.menu li:hover,
+button:hover {
+  background: #eee5cc;
 }
 
 .menu {
   list-style-type: none;
   display: flex;
   justify-content: center;
-  background: #eee;
+  background: white;
 }
 </style>
