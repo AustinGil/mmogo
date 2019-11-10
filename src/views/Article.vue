@@ -2,10 +2,7 @@
   <div v-if="article">
     <h1 class="text-4xl mb-3">{{ article.title }}</h1>
 
-    <ul
-      v-if="article.categories && article.categories.length"
-      class="flex flex-wrap mb-4"
-    >
+    <ul v-if="article.categories && article.categories.length" class="flex flex-wrap mb-4">
       <li v-for="category in article.categories" :key="category">
         <RouterLink
           :to="{
@@ -13,58 +10,46 @@
             query: { category }
           }"
           class="app-btn rounded m-1 px-2 py-1 text-xs"
-        >
-          {{ getCategoryLabel(category) }}
-        </RouterLink>
+        >{{ getCategoryLabel(category) }}</RouterLink>
       </li>
     </ul>
 
     <img
       v-if="article.image && isOffline"
       src="/img/offline-img.svg"
-      alt=""
+      alt
       width="900"
       height="600"
       class="mb-4"
     />
-    <img v-else-if="article.image" :src="article.image" alt="" class="mb-4" />
+    <img v-else-if="article.image" :src="article.image" alt class="mb-4" />
 
-    <p v-if="article.content" class="mb-4 whitespace-pre-wrap">
-      {{ article.content }}
-    </p>
+    <p v-if="article.content" class="mb-4 whitespace-pre-wrap">{{ article.content }}</p>
+
+    <div class="rate">
+      <img src="img/icons-mmogo/original/thumb.png" />
+      <img src="img/icons-mmogo/original/thumb-down.png" />
+    </div>
 
     <template v-if="$store.state.downloads[articleId]">
-      <AppBtn @click="$store.dispatch('removeDownload', article)" class="mr-2">
-        Remove
-      </AppBtn>
+      <AppBtn @click="$store.dispatch('removeDownload', article)" class="mr-2">Remove</AppBtn>
 
-      <AppBtn @click="showQr = !showQr" class="app-btn mr-2 rounded px-4 py-2">
-        Share
-      </AppBtn>
+      <AppBtn @click="showQr = !showQr" class="app-btn mr-2 rounded px-4 py-2">Share</AppBtn>
     </template>
 
-    <AppBtn
-      v-else
-      @click="$store.dispatch('saveDownload', article)"
-      class="mr-2"
-    >
-      Download
-    </AppBtn>
+    <AppBtn v-else @click="$store.dispatch('saveDownload', article)" class="mr-2">Download</AppBtn>
 
     <template v-if="isAuthor">
       <RouterLink
         :to="{ name: 'article-edit', params: { articleId } }"
         class="app-btn mr-2 rounded px-4 py-2"
-        >Edit
-      </RouterLink>
+      >Edit</RouterLink>
 
       <AppBtn @click="onDelete">Delete</AppBtn>
     </template>
 
     <div v-show="showQr" class="qr-wrapper grid text-center mt-6 mb-6">
-      <p class="max-w-sm text-xl mb-5">
-        Have your friends scan this QR code to import the article.
-      </p>
+      <p class="max-w-sm text-xl mb-5">Have your friends scan this QR code to import the article.</p>
       <div ref="qrcode"></div>
     </div>
   </div>
@@ -148,5 +133,10 @@ export default {
 <style lang="scss">
 .qr-wrapper {
   justify-items: center;
+}
+.rate {
+  height: 50%;
+  width: 50%;
+  justify-content: right;
 }
 </style>
