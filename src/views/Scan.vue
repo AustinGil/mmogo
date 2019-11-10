@@ -22,6 +22,7 @@
       "
       @change="selectDevice"
       class="mb-4"
+      :classes="{ fieldset: 'flex' }"
     />
 
     <AppBtn v-if="imageCapture" @click="takePhoto" class="mb-6"
