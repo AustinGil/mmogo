@@ -2,13 +2,13 @@
   <div id="app" class="p-8">
     <div id="nav" class="pb-8">
       <div class="header">
-        getmmagogo
+        <img
+          src="\img\icons-mmogo\original\Getmmogo logo_FINAL-05.png"
+          style="width:30%; height:30%;"
+        />
         <form v-on:submit.prevent="filterOn" class="flex">
-          <input
-            v-bind:value="search"
-            v-on:input="search = $event.target.value"
-          />
-          <button class="">Search</button>
+          <input v-bind:value="search" v-on:input="search = $event.target.value" />
+          <button class>Search</button>
         </form>
       </div>
 
@@ -64,11 +64,14 @@ export default {
   margin-right: auto;
   background: #bd514a;
 }
-
+body {
+  background: #bd514a;
+}
+main {
+  width: 100%;
+  background: white;
+}
 #nav {
-  main {
-    background: white;
-  }
   .header {
     display: flex;
     justify-content: space-between;
@@ -80,7 +83,7 @@ export default {
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #2c3e50;
     }
   }
 }
@@ -89,14 +92,16 @@ export default {
   padding: 0px 10px;
   color: #bd514a;
 }
-.menu li:hover {
-  background: rgb(255, 206, 206);
+.menu li:hover,
+button:hover {
+  background: #eee5cc;
 }
 
 .menu {
   list-style-type: none;
   display: flex;
   justify-content: center;
-  background: #eee;
+  background: white;
+  padding: 5px 0px;
 }
 </style>

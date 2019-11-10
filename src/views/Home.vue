@@ -1,36 +1,39 @@
 <template>
-  <div>
-    <div class="grid grid-3-columns@md grid-2-columns@sm pb-8">
-      <button
-        v-for="category in categories"
-        :key="category.value"
-        @click="setCategory(category.value)"
-        class="p-3"
-      >
-        {{ category.label }}
-      </button>
-    </div>
+  <main>
+    <div>
+      <div class="grid grid-3-columns@md grid-2-columns@sm pb-8">
+        <button
+          v-for="category in categories"
+          :key="category.value"
+          @click="setCategory(category.value)"
+          class="p-3"
+        >
+          <img :src="category.icon" class="icon" />
+          {{ category.label }}
+        </button>
+      </div>
 
-    <article v-for="article in filtered" :key="article.id">
-      <RouterLink :to="{ name: 'article', params: { articleId: article._id } }">
-        <div class="artical">
-          <table>
-            <tr>
-              <td class="title">{{ article.title }}</td>
-              <td class="notes">
-                post id: {{ article.id }}
-                <br />
-                date: {{ article.created }}
-              </td>
-            </tr>
-            <tr>
-              <td class="post" colspan="2">{{ article.format }}</td>
-            </tr>
-          </table>
-        </div>
-      </RouterLink>
-    </article>
-  </div>
+      <article v-for="article in filtered" :key="article.id">
+        <RouterLink :to="{ name: 'article', params: { articleId: article._id } }">
+          <div class="artical">
+            <table>
+              <tr>
+                <td class="title">{{ article.title }}</td>
+                <td class="notes">
+                  post id: {{ article._id }}
+                  <br />
+                  date: {{ article._created }}
+                </td>
+              </tr>
+              <tr>
+                <td class="post" colspan="2">{{ article.format }}</td>
+              </tr>
+            </table>
+          </div>
+        </RouterLink>
+      </article>
+    </div>
+  </main>
 </template>
 
 <script>
@@ -110,5 +113,25 @@ export default {
 .post {
   column-span: all;
   padding: 5px 0px;
+}
+
+.catagorys {
+  margin-left: auto;
+  margin-right: auto;
+}
+.catagorys td {
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  vertical-align: middle;
+}
+.catagorys td:hover {
+  background: #eee;
+}
+.icon {
+  height: 75px;
+  width: 75px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

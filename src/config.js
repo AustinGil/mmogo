@@ -5,27 +5,48 @@ export default {
   categories: [
     {
       label: "Sustainability",
-      value: "sustainability"
+      value: "sustainability",
+      icon: "/img/icons-mmogo/original/009-timber.svg"
     },
     {
       label: "Agriculture",
-      value: "agriculture"
+      value: "agriculture",
+      icon: "/img/icons-mmogo/original/010-tractor.svg"
     },
     {
       label: "Enterprise",
-      value: "enterprise"
+      value: "enterprise",
+      icon: "/img/icons-mmogo/original/005-investment.svg"
     },
     {
       label: "Livestock",
-      value: "livestock"
+      value: "livestock",
+      icon: "/img/icons-mmogo/original/011-cow.svg"
     },
     {
       label: "Waste Disposal",
-      value: "waste-disposal"
+      value: "waste-disposal",
+      icon: "/img/icons-mmogo/original/006-recycle-bin.svg"
     },
     {
       label: "Conservation",
-      value: "conservation"
+      value: "conservation",
+      icon: "/img/icons-mmogo/original/004-growth.svg"
+    },
+    {
+      label: "Infrastructure",
+      value: "Infrastructure",
+      icon: "/img/icons-mmogo/original/008-wooden.svg"
+    },
+    {
+      label: "Health",
+      value: "Health",
+      icon: "/img/icons-mmogo/original/017-mortar.svg"
+    },
+    {
+      label: "How To",
+      value: "how to",
+      icon: "/img/icons-mmogo/original/014-drill.svg"
     }
   ]
 };
