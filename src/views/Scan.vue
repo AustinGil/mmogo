@@ -26,7 +26,11 @@ export default {
       // alert("Just kidding. This feature hasn't been completed yet 😞.");
 
       const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: true
+        video: {
+          facingMode: {
+            exact: "environment"
+          }
+        }
       });
       const mediaStreamTrack = mediaStream.getVideoTracks()[0];
       this.imageCapture = new ImageCapture(mediaStreamTrack);
