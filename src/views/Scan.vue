@@ -11,7 +11,7 @@
 
     <AppBtn v-else @click="takePhoto" class="text-4xl">Capture photo</AppBtn>
 
-    <video ref="video"></video>
+    <video ref="video" autoplay></video>
 
     <img ref="img" src="" alt="" />
   </div>
@@ -36,6 +36,7 @@ export default {
       });
 
       this.$refs.video.srcObject = stream;
+      video.play();
       // streamStarted = true;
 
       const mediaStreamTrack = mediaStream.getVideoTracks()[0];
