@@ -1,80 +1,28 @@
 <template>
   <main>
     <div>
-      <table class="catagorys">
-        <tr>
-          <td>
-            <img src="\img\icons-mmogo\original\009-timber.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\010-tractor.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\011-cow.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\012-mushroom.svg" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img src="\img\icons-mmogo\original\013-presentation.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\014-drill.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\015-fruits.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\016-tourists.svg" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img src="\img\icons-mmogo\original\017-mortar.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\001-log.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\002-trowel.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\003-hen.svg" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img src="\img\icons-mmogo\original\004-growth.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\005-investment.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\006-recycle-bin.svg" />
-          </td>
-          <td>
-            <img src="\img\icons-mmogo\original\007-pollution.svg" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img src="\img\icons-mmogo\original\008-wooden.svg" />
-          </td>
-        </tr>
-      </table>
+      <div class="grid grid-3-columns@md grid-2-columns@sm pb-8">
+        <button
+          v-for="category in categories"
+          :key="category.value"
+          @click="setCategory(category.value)"
+          class="p-3"
+        >
+          <img :src="category.icon" class="icon" />
+          {{ category.label }}
+        </button>
+      </div>
 
-      <article v-for="article in articles" :key="article.id">
+      <article v-for="article in filtered" :key="article.id">
         <RouterLink :to="{ name: 'article', params: { articleId: article._id } }">
           <div class="artical">
             <table>
               <tr>
                 <td class="title">{{ article.title }}</td>
                 <td class="notes">
-                  post id: {{ article.id }}
+                  post id: {{ article._id }}
                   <br />
-                  date: {{ article.created }}
+                  date: {{ article._created }}
                 </td>
               </tr>
               <tr>
@@ -94,17 +42,49 @@ import http from "@/utils/http";
 
 export default {
   props: {
-    filter: String
+    search: String
   },
 
   data: () => ({
-    articles: []
+    articles: [],
+    categories: config.categories,
+    category: ""
   }),
 
+  computed: {
+    filtered() {
+      const { search, category } = this;
+      return this.articles.filter(article => {
+        if (search) {
+          const text = (article.title + article.content).toLowerCase();
+          if (!text.includes(search.toLowerCase())) {
+            return false;
+          }
+        }
+        if (category) {
+          const categories = article.categories || [];
+          return categories.includes(category);
+        }
+        return true;
+      });
+    }
+  },
+
   async mounted() {
+    this.category = this.$route.query.category;
+
     this.$store.commit("addLoader");
     this.articles = await http.get(config.db.articles);
     this.$store.commit("removeLoader");
+  },
+
+  methods: {
+    setCategory(category) {
+      const currentCategory = this.category;
+      category = currentCategory === category ? undefined : category;
+      this.category = category;
+      this.$router.push({ name: "home", query: { category } });
+    }
   }
 };
 </script>
@@ -148,7 +128,7 @@ export default {
 .catagorys td:hover {
   background: #eee;
 }
-.catagorys img {
+.icon {
   height: 75px;
   width: 75px;
   margin-left: auto;

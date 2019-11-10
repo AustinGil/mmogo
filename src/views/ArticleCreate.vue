@@ -1,32 +1,34 @@
 <template>
-  <div>
-    <form @submit.prevent="onSubmit">
-      <AppInput v-model="form.title" label="Title" />
+  <main>
+    <div>
+      <form @submit.prevent="onSubmit">
+        <AppInput v-model="form.title" label="Title" />
 
-      <AppInput v-model="form.image" label="Image (url)" type="url" />
+        <AppInput v-model="form.image" label="Image (url)" type="url" />
 
-      <AppInput
-        v-for="{ label, value } in categories"
-        :key="value"
-        :label="label"
-        type="checkbox"
-        :value="value"
-        :checked="form.categories.includes(value)"
-        @change="onToggleCategory"
-      />
+        <AppInput
+          v-for="{ label, value } in categories"
+          :key="value"
+          :label="label"
+          type="checkbox"
+          :value="value"
+          :checked="form.categories.includes(value)"
+          @change="onToggleCategory"
+        />
 
-      <!-- <AppInput
+        <!-- <AppInput
         v-model="form.title"
         label="Format"
         type="radio"
         :options="formats"
-      /> -->
+        />-->
 
-      <AppInput v-model="form.content" label="Content" type="textarea" />
+        <AppInput v-model="form.content" label="Content" type="textarea" />
 
-      <AppBtn type="submit">Save</AppBtn>
-    </form>
-  </div>
+        <AppBtn type="submit">Save</AppBtn>
+      </form>
+    </div>
+  </main>
 </template>
 
 <script>
@@ -42,32 +44,7 @@ export default {
       content: "",
       categories: []
     },
-    categories: [
-      {
-        label: "Sustainability",
-        value: "sustainability"
-      },
-      {
-        label: "Agriculture",
-        value: "agriculture"
-      },
-      {
-        label: "Enterprise",
-        value: "enterprise"
-      },
-      {
-        label: "Livestock",
-        value: "livestock"
-      },
-      {
-        label: "Waste Disposal",
-        value: "waste-disposal"
-      },
-      {
-        label: "Conservation",
-        value: "conservation"
-      }
-    ]
+    categories: config.categories
     // formats: [
     //   {
     //     label: "Text",
@@ -107,7 +84,7 @@ input,
 textarea,
 select {
   border: 1px solid;
-  width: 100%;
+  width: 90%;
 }
 input[type="radio"],
 input[type="checkbox"] {

@@ -4,6 +4,7 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import VueOffline from "vue-offline";
+import "@/assets/scss/main.scss";
 
 Vue.use(VueOffline);
 

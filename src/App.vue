@@ -1,14 +1,14 @@
 <template>
-  <div id="app">
-    <div id="nav">
+  <div id="app" class="p-8">
+    <div id="nav" class="pb-8">
       <div class="header">
         <img
           src="\img\icons-mmogo\original\Getmmogo logo_FINAL-05.png"
           style="width:30%; height:30%;"
         />
-        <form v-on:submit.prevent="filterOn">
-          <input id="term" v-bind:value="search" v-on:input="search = $event.target.value" />
-          <button>Search Topic</button>
+        <form v-on:submit.prevent="filterOn" class="flex">
+          <input v-bind:value="search" v-on:input="search = $event.target.value" />
+          <button class>Search</button>
         </form>
       </div>
 
@@ -27,7 +27,7 @@
 
     <AppLoading v-show="$store.state.loaderCount" />
 
-    <router-view v-show="!$store.state.loaderCount" filter="yo" />
+    <router-view v-show="!$store.state.loaderCount" :search="search" />
   </div>
 </template>
 
@@ -41,12 +41,6 @@ export default {
     return {
       search: ""
     };
-  },
-
-  methods: {
-    filterOn() {
-      console.log(this.search);
-    }
   }
 };
 </script>
@@ -62,13 +56,14 @@ export default {
   margin-right: auto;
   background: #bd514a;
 }
-
+body {
+  background: #bd514a;
+}
+main {
+  width: 100%;
+  background: white;
+}
 #nav {
-  padding: 30px;
-  main {
-    background: white;
-    max-width: 600px;
-  }
   .header {
     display: flex;
     justify-content: space-between;
@@ -82,14 +77,6 @@ export default {
     &.router-link-exact-active {
       color: #2c3e50;
     }
-  }
-  button {
-    background: white;
-    padding: 2px;
-  }
-  input {
-    background: white;
-    padding: 2px;
   }
 }
 .menu li {
@@ -107,5 +94,6 @@ button:hover {
   display: flex;
   justify-content: center;
   background: white;
+  padding: 5px 0px;
 }
 </style>

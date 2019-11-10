@@ -1,0 +1,41 @@
+/* removes content from page layout but keeps information available to accessibility APIs */
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+}
+
+.color-muted {
+  opacity: 0.5;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.list-plain,
+.list-inline {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.list-inline > li {
+  display: inline-block;
+}
