@@ -7,7 +7,11 @@
           style="width:30%; height:30%;"
         />
         <form v-on:submit.prevent="filterOn" class="flex">
-          <input v-bind:value="search" v-on:input="search = $event.target.value" />
+          <input
+            v-bind:value="search"
+            v-on:input="search = $event.target.value"
+            style="margin-left:auto;width:150px;"
+          />
           <button class>Search</button>
         </form>
       </div>
@@ -62,6 +66,8 @@ body {
 main {
   width: 100%;
   background: white;
+  padding-top: 10px;
+  padding-bottom: 50px;
 }
 #nav {
   .header {
