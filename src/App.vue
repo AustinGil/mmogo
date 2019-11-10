@@ -9,7 +9,7 @@
       </RouterLink>
 
       <ul
-        class="menu flex flex-wrap rounded-t justify-center align-center bg-white border-b-2 border-solid border-gray-300"
+        class="menu flex flex-wrap rounded-t justify-center align-center bg-white border-b border-solid border-gray-300"
       >
         <li>
           <router-link to="/" class="m-1 p-2 block">Home</router-link>
@@ -94,6 +94,12 @@ input[type="radio"],
 input[type="checkbox"] {
   width: initial;
 }
+
+a,
+button {
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

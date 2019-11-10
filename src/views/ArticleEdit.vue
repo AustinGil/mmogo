@@ -15,7 +15,6 @@
         type="url"
         class="mb-3"
         :classes="{ input: 'px-2 py-1 border-gray-400 rounded' }"
-        required
       />
 
       <fieldset class="mb-3">
@@ -42,9 +41,12 @@
       />
 
       <AppBtn type="submit">Save</AppBtn>
-      <RouterLink to="/" class="app-btn rounded px-4 py-2">Back</RouterLink>
+      <RouterLink
+        :to="{ name: 'article', params: $route.params }"
+        class="app-btn rounded px-4 py-2"
+        >Back</RouterLink
+      >
     </form>
-    {{ $route }}
   </div>
 </template>
 

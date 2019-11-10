@@ -34,23 +34,27 @@
     </p>
 
     <template v-if="$store.state.downloads[articleId]">
-      <AppBtn @click="$store.dispatch('removeDownload', article)">
+      <AppBtn @click="$store.dispatch('removeDownload', article)" class="mr-2">
         Remove
       </AppBtn>
 
-      <AppBtn @click="showQr = !showQr" class="app-btn rounded px-4 py-2">
+      <AppBtn @click="showQr = !showQr" class="app-btn mr-2 rounded px-4 py-2">
         Share
       </AppBtn>
     </template>
 
-    <AppBtn v-else @click="$store.dispatch('saveDownload', article)">
+    <AppBtn
+      v-else
+      @click="$store.dispatch('saveDownload', article)"
+      class="mr-2"
+    >
       Download
     </AppBtn>
 
     <template v-if="isAuthor">
       <RouterLink
         :to="{ name: 'article-edit', params: { articleId } }"
-        class="app-btn rounded px-4 py-2"
+        class="app-btn mr-2 rounded px-4 py-2"
         >Edit
       </RouterLink>
 
@@ -104,7 +108,20 @@ export default {
     }
 
     this.$nextTick(() => {
-      new QRCode(this.$refs.qrcode, JSON.stringify(this.article));
+      const article = this.article;
+      const maxLength = 300;
+      const length = Math.min(article.content.length, maxLength);
+      let content = article.content.slice(0, length);
+      if (length === maxLength) {
+        content += "...";
+      }
+      new QRCode(
+        this.$refs.qrcode,
+        JSON.stringify({
+          ...article,
+          content
+        })
+      );
     });
   },
 

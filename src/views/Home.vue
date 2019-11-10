@@ -2,13 +2,14 @@
   <div>
     <div class="grid grid-3-columns@md grid-2-columns@sm pb-8">
       <button
-        v-for="category in categories"
-        :key="category.value"
-        @click="setCategory(category.value)"
-        class="p-3"
+        v-for="filterCat in categories"
+        :key="filterCat.value"
+        @click="setCategory(filterCat.value)"
+        class="category-filter p-3 rounded border border-solid border-transparent"
+        :class="{ 'category-filter--selected': filterCat.value === category }"
       >
-        <img :src="category.icon" class="icon" />
-        {{ category.label }}
+        <img :src="filterCat.icon" class="icon" />
+        {{ filterCat.label }}
       </button>
     </div>
 
@@ -94,7 +95,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+.category-filter {
+  &:hover {
+    background: #eee5cc;
+  }
+
+  .grid &--selected,
+  .grid &--selected:hover {
+    border-color: #bd514a;
+  }
+}
+
 .icon {
   height: 75px;
   width: 75px;

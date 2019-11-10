@@ -16,7 +16,6 @@
           type="url"
           class="mb-3"
           :classes="{ input: 'px-2 py-1 border-gray-400 rounded' }"
-          required
         />
 
         <fieldset class="mb-3">
