@@ -26,9 +26,9 @@
 
     <p v-if="article.content" class="mb-4 whitespace-pre-wrap">{{ article.content }}</p>
 
-    <div class="rate">
-      <img src="img/icons-mmogo/original/thumb.png" />
-      <img src="img/icons-mmogo/original/thumb-down.png" />
+    <div class="rate grid grid-2-columns@md grid-gap justify-right pb-8">
+      <img src="/img/icons-mmogo/original/thumb.png" />
+      <img src="/img/icons-mmogo/original/thumb-down.png" />
     </div>
 
     <template v-if="$store.state.downloads[articleId]">
@@ -133,10 +133,5 @@ export default {
 <style lang="scss">
 .qr-wrapper {
   justify-items: center;
-}
-.rate {
-  height: 50%;
-  width: 50%;
-  justify-content: right;
 }
 </style>
