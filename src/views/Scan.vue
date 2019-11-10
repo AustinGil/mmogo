@@ -25,13 +25,18 @@
       :classes="{ fieldset: 'flex' }"
     />
 
-    <AppBtn v-if="imageCapture" @click="takePhoto" class="mb-6"
-      >Capture photo</AppBtn
-    >
+    <template v-if="imgSrc">
+      <img :src="imgSrc" @load="onImgLoad" alt="" class="mb-4" />
+      <AppBtn @click="imgSrc = ''">Remove photo</AppBtn>
+    </template>
 
-    <!-- <video ref="video" autoplay></video> -->
+    <div v-show="imageCapture && !imgSrc">
+      <video ref="video" autoplay class="mb-3"></video>
 
-    <img ref="img" src="" alt="" />
+      <AppBtn v-if="imageCapture" @click="takePhoto">
+        Capture photo
+      </AppBtn>
+    </div>
   </div>
 </template>
 
@@ -39,14 +44,20 @@
 export default {
   data: () => ({
     videoDevices: [],
-    selectedDevice: null,
-    imageCapture: null
+    imageCapture: null,
+    imgSrc: ""
   }),
 
   async mounted() {
     const devices = await navigator.mediaDevices.enumerateDevices();
     this.videoDevices = devices.filter(device => device.kind === "videoinput");
-    console.log(this.videoDevices);
+    if (!this.videoDevices.length) return;
+
+    this.selectDevice({
+      target: {
+        value: this.videoDevices[0].deviceId
+      }
+    });
   },
 
   methods: {
@@ -55,12 +66,6 @@ export default {
     },
 
     async selectDevice(event) {
-      // const found = this.videoDevices.find(device => {
-      //   return device.label === event.target.value;
-      // });
-      // if (!found) return;
-      // this.selectedDevice = found;
-
       const constraints = {
         video: {
           //     width: {
@@ -85,18 +90,20 @@ export default {
       const mediaStreamTrack = mediaStream.getVideoTracks()[0];
       this.imageCapture = new ImageCapture(mediaStreamTrack);
 
-      // this.$refs.video.srcObject = stream;
-      //   video.play();
+      this.$refs.video.srcObject = mediaStream;
+    },
+
+    onImgLoad() {
+      URL.revokeObjectURL(this.imgSrc);
     },
 
     async takePhoto() {
-      const imageCapture = this.imageCapture;
-      const blob = await imageCapture.takePhoto();
-
-      this.$refs.img.src = URL.createObjectURL(blob);
-      this.$refs.img.onload = () => {
-        URL.revokeObjectURL(this.src);
-      };
+      const blob = await this.imageCapture.takePhoto();
+      this.imgSrc = URL.createObjectURL(blob);
+      // this.$refs.img.onload = e => {
+      //   console.log(e, this.src);
+      //   URL.revokeObjectURL(this.src);
+      // };
     }
   }
 };
