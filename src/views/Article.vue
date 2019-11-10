@@ -20,7 +20,10 @@
       Save for offline
     </AppBtn>
 
-    <RouterLink :to="{ name: 'article-edit', params: { articleId } }">
+    <RouterLink
+      v-if="isAuthor"
+      :to="{ name: 'article-edit', params: { articleId } }"
+    >
       Edit
     </RouterLink>
   </div>
@@ -41,6 +44,17 @@ export default {
   data: () => ({
     article: null
   }),
+
+  computed: {
+    isAuthor() {
+      const user = this.$store.state.user;
+      if (!user) return false;
+
+      const author = this.article && this.article.author;
+
+      return user.email === author;
+    }
+  },
 
   async mounted() {
     this.$store.commit("addLoader");

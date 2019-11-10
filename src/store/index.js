@@ -5,10 +5,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: null,
     loaderCount: 0,
     offline: JSON.parse(localStorage.getItem("articles") || "{}")
   },
   mutations: {
+    setUser(state, user) {
+      state.user = user;
+    },
     addLoader(state) {
       state.loaderCount++;
     },

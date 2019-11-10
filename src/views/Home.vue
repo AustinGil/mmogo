@@ -1,39 +1,37 @@
 <template>
-  <main>
-    <div>
-      <div class="grid grid-3-columns@md grid-2-columns@sm pb-8">
-        <button
-          v-for="category in categories"
-          :key="category.value"
-          @click="setCategory(category.value)"
-          class="p-3"
-        >
-          <img :src="category.icon" class="icon" />
-          {{ category.label }}
-        </button>
-      </div>
-
-      <article v-for="article in filtered" :key="article.id">
-        <RouterLink :to="{ name: 'article', params: { articleId: article._id } }">
-          <div class="artical">
-            <table>
-              <tr>
-                <td class="title">{{ article.title }}</td>
-                <td class="notes">
-                  post id: {{ article._id }}
-                  <br />
-                  date: {{ article._created }}
-                </td>
-              </tr>
-              <tr>
-                <td class="post" colspan="2">{{ article.format }}</td>
-              </tr>
-            </table>
-          </div>
-        </RouterLink>
-      </article>
+  <div>
+    <div class="grid grid-3-columns@md grid-2-columns@sm pb-8">
+      <button
+        v-for="category in categories"
+        :key="category.value"
+        @click="setCategory(category.value)"
+        class="p-3"
+      >
+        <img :src="category.icon" class="icon" />
+        {{ category.label }}
+      </button>
     </div>
-  </main>
+
+    <article v-for="article in filtered" :key="article.id">
+      <RouterLink :to="{ name: 'article', params: { articleId: article._id } }">
+        <div class="artical">
+          <table>
+            <tr>
+              <td class="title">{{ article.title }}</td>
+              <td class="notes">
+                post id: {{ article._id }}
+                <br />
+                date: {{ article._created }}
+              </td>
+            </tr>
+            <tr>
+              <td class="post" colspan="2">{{ article.format }}</td>
+            </tr>
+          </table>
+        </div>
+      </RouterLink>
+    </article>
+  </div>
 </template>
 
 <script>
