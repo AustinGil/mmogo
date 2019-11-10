@@ -5,7 +5,12 @@
       offline collection.
     </p>
 
+    <p v-if="!videoDevices">
+      Please use a device with video capture, and allow access.
+    </p>
+
     <AppInput
+      v-else
       label="Available Devices"
       type="radio"
       name="videoDevices"
@@ -19,7 +24,7 @@
       class="mb-4"
     />
 
-    <AppBtn v-if="imageCapture" @click="takePhoto" class="text-4xl mb-6"
+    <AppBtn v-if="imageCapture" @click="takePhoto" class="mb-6"
       >Capture photo</AppBtn
     >
 
