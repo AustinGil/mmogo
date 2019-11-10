@@ -25,7 +25,7 @@
 
         <AppInput v-model="form.content" label="Content" type="textarea" />
 
-        <AppBtn type="submit">Save</AppBtn>
+        <AppBtn type="submit" style=" margin-left: auto;">Save</AppBtn>
       </form>
     </div>
   </main>
@@ -89,7 +89,6 @@ input,
 textarea,
 select {
   border: 1px solid;
-  width: 90%;
 }
 input[type="radio"],
 input[type="checkbox"] {
