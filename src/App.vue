@@ -1,14 +1,17 @@
 <template>
   <div id="app" class="p-8">
-    <div id="nav" class="pb-8">
-      <div class="header">
+    <header id="nav" class="pb-8">
+      <div class="header flex justify-between">
         <img
           src="\img\icons-mmogo\original\Getmmogo logo_FINAL-05.png"
           style="width:30%; height:30%;"
         />
-        <form v-on:submit.prevent="filterOn" class="flex">
-          <input v-bind:value="search" v-on:input="search = $event.target.value" />
-          <button class>Search</button>
+        <form v-on:submit.prevent class="flex">
+          <input
+            v-bind:value="search"
+            v-on:input="search = $event.target.value"
+          />
+          <AppBtn>Search</AppBtn>
         </form>
       </div>
 
@@ -16,11 +19,15 @@
         <li>
           <router-link to="/">Home</router-link>
         </li>
+
         <li>MySaves</li>
-        <li>
+
+        <li v-if="$store.state.user">
           <router-link to="/article/new">Make New Post</router-link>
         </li>
+
         <li>Get Article</li>
+
         <li>
           <button
             v-if="$store.state.user"
@@ -31,11 +38,13 @@
           <RouterLink v-else to="/login">Log In</RouterLink>
         </li>
       </ul>
-    </div>
+    </header>
 
-    <AppLoading v-show="$store.state.loaderCount" />
+    <main class="p-4 bg-white">
+      <AppLoading v-show="$store.state.loaderCount" />
 
-    <router-view v-show="!$store.state.loaderCount" :search="search" />
+      <router-view v-show="!$store.state.loaderCount" :search="search" />
+    </main>
   </div>
 </template>
 
@@ -67,30 +76,18 @@ export default {
 body {
   background: #bd514a;
 }
-main {
-  width: 100%;
-  background: white;
-}
 #nav {
   .header {
-    display: flex;
-    justify-content: space-between;
     background: #bd514a;
   }
 
   a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #2c3e50;
-    }
+    color: #bd514a;
   }
 }
 .menu li {
   display: inline-block;
   padding: 0px 10px;
-  color: #bd514a;
 }
 .menu li:hover,
 button:hover {
