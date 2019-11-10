@@ -1,6 +1,11 @@
 {
+  "name": "getmmogo",
   "short_name": "getmmogo",
-  "name": "get mmogo",
+  "description": "getmmogo",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#bd514a",
+  "background_color": "#bd514a",
   "icons": [
     {
       "src": "/192.png",
@@ -12,10 +17,5 @@
       "type": "image/png",
       "sizes": "512x512"
     }
-  ],
-  "start_url": "/",
-  "background_color": "#bd514a",
-  "display": "fullscreen",
-  "scope": "/",
-  "theme_color": "#bd514a"
+  ]
 }

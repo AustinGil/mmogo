@@ -91,6 +91,7 @@ body {
 }
 .menu li:hover,
 button:hover {
+  color: #000;
   background: #eee5cc;
 }
 
