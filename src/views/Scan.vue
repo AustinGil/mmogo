@@ -25,6 +25,8 @@
       :classes="{ fieldset: 'flex' }"
     />
 
+    <canvas ref="canvas"></canvas>
+
     <template v-if="imgSrc">
       <img :src="imgSrc" @load="onImgLoad" alt="" class="mb-4" />
       <AppBtn @click="imgSrc = ''">Remove photo</AppBtn>
@@ -68,16 +70,16 @@ export default {
     async selectDevice(event) {
       const constraints = {
         video: {
-          //     width: {
-          //       min: 1280,
-          //       ideal: 1920,
-          //       max: 2560
-          //     },
-          //     height: {
-          //       min: 720,
-          //       ideal: 1080,
-          //       max: 1440
-          //     }
+          // width: {
+          //   min: 1280,
+          //   ideal: 1920,
+          //   max: 2560
+          // },
+          // height: {
+          //   min: 720,
+          //   ideal: 1080,
+          //   max: 1440
+          // },
           deviceId: {
             exact: event.target.value
           }
@@ -100,10 +102,28 @@ export default {
     async takePhoto() {
       const blob = await this.imageCapture.takePhoto();
       this.imgSrc = URL.createObjectURL(blob);
-      // this.$refs.img.onload = e => {
-      //   console.log(e, this.src);
-      //   URL.revokeObjectURL(this.src);
+
+      const canvas = this.$refs.canvas;
+      // canvas.renderImage(blob);
+
+      var ctx = canvas.getContext("2d");
+
+      const reader = new FileReader();
+      reader.onload = event => {
+        console.log(event.target.result);
+        // ctx.drawImage(img, 0, 0);
+      };
+      reader.readAsDataURL(blob);
+
+      // var img = new Image();
+
+      // img.onload = function() {
+      //   ctx.drawImage(img, 0, 0);
       // };
+
+      // img.src = URL.createObjectURL(blob);
+
+      // var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
     }
   }
 };
